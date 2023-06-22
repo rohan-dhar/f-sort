@@ -7,9 +7,9 @@ Cherry on top of the cake - it sorts numbers in the increasing order of value, o
 ## Installation
 
 ```bash
-    npm install f-sort
-    #OR
-    yarn add f-sort
+npm install f-sort
+#OR
+yarn add f-sort
 ```
 
 ## API Reference
