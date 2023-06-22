@@ -1,3 +1,135 @@
 # f-sort
 
-A fast and small JavaScript library to sort arrays.
+A fast, small and dependency-free JavaScript library to sort arrays. It uses quick sort internally to sort arrays _in place_, without recursion. Simply replace JavaScript's built-in Array.prototype.sort with f-sort's sort to see ~2x performance. This is especially helpful large arrays.
+
+Cherry on top of the cake - it sorts numbers in the increasing order of value, out of the box, [something that can not be said for JavaScript's native sort method](https://stackoverflow.com/questions/1063007/how-to-sort-an-array-of-integers-correctly) :)
+
+## Installation
+
+```bash
+    npm install f-sort
+    #OR
+    yarn add f-sort
+```
+
+## API Reference
+
+### `sort()`
+
+_Definition:_
+
+```javascript
+sort(
+    array: any[], // required
+    comparator?: function, // optional
+    pivotExtractor?: function // optional
+) -> any[]
+```
+
+#### Parameters
+
+1. `array: any[]` - _Required_ - The array that will be sorted in place.
+1. `comparator: function(a: any, b: any) -> Number` - _Optional_ - A function used to compare two element of the array. The function is passed two elements of the array, and it should return a number denoting the comparison of the two elements -
+
+    1. `comparator(a, b) < 0` - `a < b`
+    1. `comparator(a, b) === 0` - `a === b`
+    1. `comparator(a, b) > 0` - `a > b`
+
+    _Default value_
+
+    ```javascript
+    (a, b) => a - b;
+    ```
+
+    This default value sorts the array increasing order, if it comprises of numbers.
+
+    _Provided comparator_
+    `f-sort` provided 2 comparators out of the box -
+
+    1. `ascNumberComparator` - Sorts numbers in ascending order (default comparator)
+    1. `descNumberComparator` - Sorts numbers in descending order
+
+    These can be import as -
+
+    ```javascript
+    import { comparators } from "f-sort";
+    ```
+
+    And used as
+
+    ```javascript
+    sort(arr, comparators.ascNumberComparator); // ascending order
+    sort(arr, comparators.descNumberComparator); // descending order
+    ```
+
+1. `pivotExtractor: function(arr: any[], left: Number, right: Number) -> Number` - _Optional_ - A function returns the pivot for the partitioning of the array between left (inclusive) and right (exclusive) indices. This parameter is exposed for more advance users. The return pivot must be in the range `[left, right)`
+
+    _Default value_
+    The default pivot extractor returns the middle element of the range between
+    `left` and `right`.
+
+    ```javascript
+    // Return the index between left and right
+    // Same as Math.floor((left + right) / 2), but faster.
+    (arr, left, right) => (left + right) >>> 1;
+    ```
+
+    The `pivotExtractor` argument can be used to implement more advanced pivot selection techniques like quick select.
+
+    _Provided pivotExtractors_
+    `f-sort` provided 3 pivotExtractors out of the box -
+
+    1. `mid` - Returns the middle index of the range as the pivot (Default)
+    1. `first` - Returns the first index of the range (left) as the pivot
+    1. `last` - Returns the last index of the range (right - 1) as the pivot
+
+    These can be import as -
+
+    ```javascript
+    import { pivotExtractors } from "f-sort";
+    ```
+
+    And used as
+
+    ```javascript
+    sort(arr, undefined, pivotExtractors.mid);
+    sort(arr, undefined, pivotExtractors.first);
+    sort(arr, undefined, pivotExtractors.last);
+    ```
+
+## Usage and examples
+
+Import the sort function from f-sort, and simply pass the array to sort. The function does not create a copy of the array, and sorts it in-place, and returns the sorted array.
+
+```JavaScript
+import { sort } from "f-sort";
+const arr = [-1, 1, 100, 20000, 8];
+const sortedAdd = sort(arr);
+console.log("sortedArr:", sortedAdd);
+console.log("arr:", arr);
+```
+
+The following code outputs -
+
+```
+arr: [ -1, 1, 8, 100, 20000 ]
+sortedArr: [ -1, 1, 8, 100, 20000 ]
+```
+
+Notice, the returned array is actually just a reference to the array passed into the function. If you wish to make a sorted copy of the array, just clone the array before passing it into sort, like so -
+
+```JavaScript
+import { sort } from "f-sort";
+const arr = [-1, 1, 100, 20000, 8];
+const sortedArr = [...arr];
+sort(sortedArr);
+console.log(sortedAdd);
+console.log(arr);
+```
+
+The following code outputs -
+
+```
+arr: [ -1, 1, 100, 20000, 8 ]
+sortedArr: [ -1, 1, 8, 100, 20000 ]
+```
