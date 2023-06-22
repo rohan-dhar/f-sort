@@ -1,0 +1,25 @@
+{
+	"name": "f-sort",
+	"version": "1.0.0",
+	"license": "MIT",
+	"type": "module",
+	"source": "./src/index.js",
+	"exports": {
+		"require": "./dist/index.cjs",
+		"default": "./dist/index.js"
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"unpkg": "./dist/index.umd.js",
+	"scripts": {
+		"build": "microbundle",
+		"clean": "rm -r ./dist",
+		"rebuild": "npm run clean && npm run build",
+		"test-correctness": "node ./test/sort-correctness.test.js",
+		"test-performance": "node ./test/sort-performance.test.js",
+		"test": "npm run test-correctness && npm run test-performance"
+	},
+	"devDependencies": {
+		"microbundle": "^0.15.1"
+	}
+}
