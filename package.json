@@ -1,6 +1,6 @@
 {
 	"name": "f-sort",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"license": "MIT",
 	"type": "module",
 	"source": "./src/index.js",
@@ -33,5 +33,19 @@
 	"bugs": {
 		"email": "rohan19443@iiitd.ac.in",
 		"url": "https://github.com/rohan-dhar/f-sort/issues"
-	}
+	},
+	"keywords": [
+		"sort",
+		"sorting",
+		"fast",
+		"fast sorting",
+		"fast sort",
+		"quick",
+		"quicksort",
+		"quick sort",
+		"small",
+		"tiny",
+		"performance",
+		"memory"
+	]
 }
