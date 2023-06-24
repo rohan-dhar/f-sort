@@ -46,6 +46,7 @@
 		"small",
 		"tiny",
 		"performance",
-		"memory"
+		"memory",
+		"flexible"
 	]
 }
